@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-30KXQ65G24"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-30KXQ65G24');
+  </script>
+  <title>Rupe Magna Viewer</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      height: 100%;
+      overflow: hidden;
+      font-family: 'Inter', system-ui, sans-serif;
+      background: #edeae4;
+    }
+
+    .layout {
+      display: flex;
+      width: 100vw;
+      height: 100vh;
+    }
+
+    /* ── Left panel ── */
+    .panel {
+      width: 420px;
+      flex-shrink: 0;
+      height: 100vh;
+      overflow: hidden;
+      background: #edeae4;
+      display: flex;
+      flex-direction: column;
+      padding: 36px 32px 28px;
+      position: relative;
+    }
+    #panel-content {
+      flex: 1;
+      min-height: 0;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+    #panel-content::-webkit-scrollbar { display: none; }
+    #panel-content { scrollbar-width: none; -ms-overflow-style: none; }
+    .panel::after {
+      content: '';
+      position: absolute;
+      top: 0; right: 0; bottom: 0;
+      width: 1px;
+      background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.08) 30%, rgba(0,0,0,0.05) 70%, transparent);
+    }
+    .panel::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 30% 10%, rgba(200,160,80,0.08) 0%, transparent 55%);
+      pointer-events: none;
+    }
+    .panel-title {
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 35px;
+      font-weight: 700;
+      color: #1a1612;
+      line-height: 1.05;
+      margin-bottom: 6px;
+      position: relative;
+    }
+    .panel-subtitle {
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 15px;
+      font-weight: 400;
+      color: #7a6e5c;
+      margin-bottom: 24px;
+      position: relative;
+    }
+    .panel-abstract {
+      font-size: 12px;
+      font-weight: 400;
+      color: #5a5048;
+      line-height: 1.75;
+      margin-bottom: 24px;
+      position: relative;
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 24px;
+      position: relative;
+    }
+    .stat-box {
+      background: rgba(0,0,0,0.05);
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 6px;
+      padding: 10px 12px;
+    }
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: #8a6030;
+      line-height: 1;
+    }
+    .stat-lbl {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      color: #8a7d6a;
+      margin-top: 3px;
+    }
+    .divider {
+      border: none;
+      border-top: 1px solid rgba(0,0,0,0.1);
+      margin: 0 0 20px;
+      position: relative;
+    }
+    .author-block { position: relative; margin-bottom: 16px; }
+    .author-name { font-size: 13px; font-weight: 500; color: #1a1612; margin-bottom: 4px; }
+    .author-role { font-size: 11px; color: #6a5e50; margin-bottom: 8px; }
+    .social-row { display: flex; gap: 14px; margin-bottom: 10px; }
+    .social-link {
+      display: inline-flex;
+      align-items: center;
+      color: rgba(0,0,0,0.38);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .social-link:hover { color: rgba(0,0,0,0.82); }
+    .social-link svg { width: 18px; height: 18px; display: block; }
+    .abstract-link {
+      color: #8a6030;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(138,96,48,0.35);
+      font-weight: 500;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .abstract-link:hover {
+      color: #5a3c18;
+      border-bottom-color: rgba(90,60,24,0.7);
+    }
+
+    .panel-footer {
+      margin-top: auto;
+      position: relative;
+      border-top: 1px solid rgba(0,0,0,0.1);
+      padding-top: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .footer-row { display: flex; justify-content: space-between; align-items: baseline; }
+    .footer-label { font-size: 9px; text-transform: uppercase; letter-spacing: 0.8px; color: #9a8a78; }
+    .footer-val { font-size: 10px; color: #5a4e42; text-align: right; }
+    .license-tag {
+      display: inline-block;
+      border: 1px solid rgba(130,90,30,0.3);
+      border-radius: 3px;
+      padding: 2px 7px;
+      font-size: 10px;
+      color: #6a5030;
+    }
+
+    /* ── Right: strip + viewer ── */
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* Figure strip */
+    .fig-strip {
+      flex-shrink: 0;
+      height: 120px;
+      display: grid;
+      grid-template-columns: repeat(11, minmax(72px, 1fr));
+      gap: 6px;
+      padding: 8px 8px 6px;
+      background: #edeae4;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+      position: relative;
+      z-index: 2;
+      overflow-x: auto;
+    }
+    .fig-strip::-webkit-scrollbar { height: 3px; }
+    .fig-strip::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.15); border-radius: 2px; }
+    .fig-strip::-webkit-scrollbar-track { background: transparent; }
+
+    .fig-card {
+      background: #edeae4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      cursor: pointer;
+      border-radius: 4px;
+      border-bottom: 3px solid transparent;
+      transition: border-color 0.15s, opacity 0.15s, transform 0.15s;
+    }
+    .fig-card:hover:not(.unavailable) {
+      border-bottom-color: rgba(200,160,80,0.55);
+      transform: translateY(-2px);
+      z-index: 1;
+    }
+    .fig-card.active {
+      border-bottom-color: #c8a055;
+      transform: translateY(-2px);
+    }
+    .fig-card.unavailable { opacity: 0.35; cursor: not-allowed; }
+    .fig-card.unavailable img { filter: grayscale(100%); }
+
+    .fig-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+      padding: 0;
+    }
+
+    .fig-card-label { display: none; }
+
+    /* Viewer area */
+    .viewer-area {
+      flex: 1;
+      position: relative;
+      background: #edeae4;
+      overflow: hidden;
+    }
+
+    .viewer-placeholder {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+    }
+    .viewer-placeholder p {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      color: rgba(0,0,0,0.12);
+    }
+
+    #viewer-frame {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: none;
+    }
+
+    /* Responsive */
+    @media (max-width: 1200px) {
+      .panel { width: 400px; padding: 28px 28px 24px; }
+      .panel-abstract { font-size: 11px; }
+    }
+    @media (max-width: 720px) {
+      html, body { overflow-y: auto; height: auto; overflow-x: hidden; }
+      .layout { flex-direction: column; height: auto; overflow: visible; }
+
+      .panel {
+        width: 100%; height: auto; overflow: visible;
+        padding: 28px 20px 20px;
+      }
+      .panel::after, .panel::before { display: none; }
+      #panel-content { overflow: visible; height: auto; flex: none; }
+
+      /* fig-strip inside panel on mobile */
+      .panel .fig-strip {
+        display: flex !important;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        height: 130px;
+        gap: 8px;
+        padding: 0 20px 10px 0;
+        margin: 0 -20px 20px -20px;
+        padding-left: 20px;
+        background: transparent;
+        box-shadow: none;
+        grid-template-columns: unset;
+      }
+      .panel .fig-strip .fig-card {
+        flex: 0 0 calc(33vw - 12px);
+        height: 100%;
+      }
+
+      /* viewer-area inside panel on mobile */
+      .panel .viewer-area {
+        width: 100%;
+        height: 80vw;
+        min-height: 300px;
+        display: none;
+        margin-bottom: 24px;
+      }
+      .panel .viewer-area.mobile-active { display: block; }
+      .panel #viewer-frame { display: none !important; }
+      .panel .viewer-area.mobile-active #viewer-frame { display: block !important; }
+
+      main { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="layout">
+
+  <!-- ── Left panel ── -->
+  <aside class="panel">
+    <h1 class="panel-title" onclick="resetHome()" style="cursor:pointer;">Rupe Magna Viewer</h1>
+    <p class="panel-subtitle">Interactive RTI Viewer for Rock Art Figures</p>
+    <hr class="divider">
+    <div id="panel-content">
+    <p class="panel-abstract">
+      This dataset was produced during a fieldwork campaign carried out from 4 to 8 September 2025
+      at the <a href="https://www.parcoincisionigrosio.it" target="_blank" class="abstract-link">Parco delle Incisioni Rupestri di Grosio-Grosotto</a>,
+      with official authorisation from Stefano Rossi, Archaeologist Officer at the Ministry of Culture,
+      and with the operational support of Federico Zoni, Director of the Park.
+    </p>
+
+    <p class="panel-abstract">
+      Rupe Magna, located in Grosio (Sondrio, Valtellina), is the largest engraved
+      rock surface in the Alpine region. Spanning 84 metres in length and 35 metres
+      in height, it preserves over 5,000 carvings produced between the late Neolithic
+      (3rd millennium BCE) and the Iron Age (5th century BCE), including anthropomorphic,
+      zoomorphic, and geometric figures of exceptional archaeological significance.
+    </p>
+    <p class="panel-abstract">
+      Reflectance Transformation Imaging (RTI) is a computational photography technique
+      that captures a surface under multiple, precisely controlled lighting directions.
+      By fitting a mathematical reflectance model to each pixel, RTI enables interactive
+      re-lighting and reveals micro-topographic detail invisible under standard illumination —
+      making it particularly effective for documenting eroded or shallow engravings.
+      Datasets were processed using RTI-FLOW and <a href="https://github.com/cnr-isti-vclab/relight" target="_blank" class="abstract-link">RelightLab</a>, and are visualised here
+      through <a href="https://github.com/cnr-isti-vclab/openlime" target="_blank" class="abstract-link">OpenLIME</a> (CNR-ISTI VCLAB).
+    </p>
+    <p class="panel-abstract">
+      During the September 2025 field campaign, 40 RTI datasets were acquired across
+      six sectors of the rock surface using a custom-built portable dome (Ø 460 mm,
+      48 LEDs, 6 rings, Fujifilm X-S20). Eleven representative figures — among them
+      praying figures, warriors, goats, and geometric symbols — were selected for
+      this open dataset. All data are published as FAIR-compliant open resources in
+      accordance with the London Charter and the ECCCH framework.
+    </p>
+    </div>
+
+    <div class="stats-grid" style="display:none">
+      <div class="stat-box"><div class="stat-num">11</div><div class="stat-lbl">Figures</div></div>
+      <div class="stat-box"><div class="stat-num">40</div><div class="stat-lbl">RTI Datasets</div></div>
+      <div class="stat-box"><div class="stat-num">48</div><div class="stat-lbl">LED Dome</div></div>
+      <div class="stat-box"><div class="stat-num">5400+</div><div class="stat-lbl">Engravings</div></div>
+    </div>
+
+    <div class="panel-footer">
+      <div style="padding-top: 4px;">
+        <div class="footer-row" style="align-items:center;">
+          <span class="footer-label">Hüseyin Erdoğan</span>
+          <span style="display:flex; gap:10px; align-items:center;">
+            <a class="social-link" href="https://github.com/e-huseyin" target="_blank" title="GitHub">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+            </a>
+            <a class="social-link" href="https://orcid.org/0000-0002-2965-0918" target="_blank" title="ORCID">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.372 0 0 5.372 0 12s5.372 12 12 12 12-5.372 12-12S18.628 0 12 0zM7.369 4.378c.525 0 .947.431.947.947s-.422.947-.947.947-.947-.431-.947-.947.422-.947.947-.947zm-.722 3.038h1.444v10.041H6.647V7.416zm3.562 0h3.9c3.712 0 5.344 2.653 5.344 5.025 0 2.578-2.016 5.016-5.325 5.016h-3.919V7.416zm1.444 1.303v7.444h2.297c2.359 0 3.881-1.553 3.881-3.722s-1.522-3.722-3.881-3.722h-2.297z"/></svg>
+            </a>
+            <a class="social-link" href="https://www.linkedin.com/in/e-huseyin/" target="_blank" title="LinkedIn">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            </a>
+            <a class="social-link" href="mailto:huseyin.erdogan@unibo.it" title="E-mail">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </a>
+          </span>
+        </div>
+        <div class="footer-row" style="margin-top:6px;">
+          <span class="footer-label">Alma Mater Studiorum · Università di Bologna</span>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ── Right: strip + viewer ── -->
+  <main>
+
+    <div class="fig-strip">
+
+      <div class="fig-card" onclick="selectFigure(this,'datasets/F01/RTI-08/ptm/index.html')" title="Sector AA · The Praying Figure with Spiral">
+        <img src="datasets/F01/F01.png" alt="Fig. 1">
+        <div class="fig-card-label"><span class="fig-sector">Sector AA</span><span class="fig-num">Fig. 1</span></div>
+      </div>
+
+      <div class="fig-card" onclick="selectFigure(this,'datasets/F02/RTI-12/ptm/index.html')" title="Sector B · The Praying Woman Figure">
+        <img src="datasets/F02/F02.png" alt="Fig. 2">
+        <div class="fig-card-label"><span class="fig-sector">Sector B</span><span class="fig-num">Fig. 2</span></div>
+      </div>
+
+      <div class="fig-card" onclick="selectFigure(this,'datasets/F03/RTI-17/ptm/index.html')" title="Sector F · The Spiral Figure">
+        <img src="datasets/F03/F03.png" alt="Fig. 3">
+        <div class="fig-card-label"><span class="fig-sector">Sector F</span><span class="fig-num">Fig. 3</span></div>
+      </div>
+
+      <div class="fig-card" onclick="selectFigure(this,'datasets/F04/RTI-23/ptm/index.html')" title="Sector L · The Warrior Figure with Shield">
+        <img src="datasets/F04/F04.png" alt="Fig. 4">
+        <div class="fig-card-label"><span class="fig-sector">Sector L</span><span class="fig-num">Fig. 4</span></div>
+      </div>
+
+      <div class="fig-card" onclick="selectFigure(this,'datasets/F05/RTI-24/ptm/index.html')" title="Sector L · The Second Warrior Figure">
+        <img src="datasets/F05/F05.png" alt="Fig. 5">
+        <div class="fig-card-label"><span class="fig-sector">Sector L</span><span class="fig-num">Fig. 5</span></div>
+      </div>
+
+      <div class="fig-card" onclick="selectFigure(this,'datasets/F06/RTI-26/ptm/index.html')" title="Sector L · The Wild Boar Figure">
+        <img src="datasets/F06/F06.png" alt="Fig. 6">
+        <div class="fig-card-label"><span class="fig-sector">Sector L</span><span class="fig-num">Fig. 6</span></div>
+      </div>
+
+      <div class="fig-card" onclick="selectFigure(this,'datasets/F07/RTI-28/ptm/index.html')" title="Sector Q · The Goat Figure with a Beard">
+        <img src="datasets/F07/F07.png" alt="Fig. 7">
+        <div class="fig-card-label"><span class="fig-sector">Sector Q</span><span class="fig-num">Fig. 7</span></div>
+      </div>
+
+      <div class="fig-card" onclick="selectFigure(this,'datasets/F08/RTI-33/ptm/index.html')" title="Sector Q · The Second Goat Figure">
+        <img src="datasets/F08/F08.png" alt="Fig. 8">
+        <div class="fig-card-label"><span class="fig-sector">Sector Q</span><span class="fig-num">Fig. 8</span></div>
+      </div>
+
+      <div class="fig-card" onclick="selectFigure(this,'datasets/F09/RTI-35/ptm/index.html')" title="Sector Q · The Map-like Figure">
+        <img src="datasets/F09/F09.png" alt="Fig. 9">
+        <div class="fig-card-label"><span class="fig-sector">Sector Q</span><span class="fig-num">Fig. 9</span></div>
+      </div>
+
+      <div class="fig-card" onclick="selectFigure(this,'datasets/F10/RTI-38/ptm/index.html')" title="Sector S · The Knight Figure">
+        <img src="datasets/F10/F10.png" alt="Fig. 10">
+        <div class="fig-card-label"><span class="fig-sector">Sector S</span><span class="fig-num">Fig. 10</span></div>
+      </div>
+
+      <div class="fig-card" onclick="selectFigure(this,'datasets/F11/RTI-40/ptm/index.html')" title="Sector S · The Figure with a Square">
+        <img src="datasets/F11/F11.png" alt="Fig. 11">
+        <div class="fig-card-label"><span class="fig-sector">Sector S</span><span class="fig-num">Fig. 11</span></div>
+      </div>
+
+    </div>
+
+    <div class="viewer-area">
+      <div class="viewer-placeholder" id="viewer-placeholder">
+        <p>Select a figure above</p>
+      </div>
+      <iframe id="viewer-frame" src="" allowfullscreen></iframe>
+    </div>
+
+  </main>
+
+</div>
+
+<script>
+  const figureData = {
+    'datasets/F01/RTI-08/ptm/index.html': {
+      title: 'Sector AA — The Praying Figure with Spiral',
+      params: { iso: '400', aperture: 'f/10', shutter: '1/8 s' },
+      content: `<p class="panel-abstract">Located on the far left of Sector AA, this anthropomorphic figure is the symbol of the Rupe Magna Archaeological Park. The engraving measures 38.5 × 30.5 cm and is stylistically identified as a linear praying figure from the Early Iron Age, characterised by U-shaped arms and triangular legs.</p><p class="panel-abstract">Its defining feature is a superimposition upon an earlier, large spiral. The praying figure overlaps the spiral with its left arm, creating a striking visual ambiguity in which the spiral appears to emerge from the figure itself. Archaeologically, this overlapping provides crucial chronological evidence: the spiral must predate the first Iron Age.</p>`
+    },
+    'datasets/F02/RTI-12/ptm/index.html': {
+      title: 'Sector B — The Praying Woman Figure',
+      params: { iso: '250', aperture: 'f/8', shutter: '1/40 s' },
+      content: `<p class="panel-abstract">Located in Sector B, a sector in the southern part of the rock featuring numerous cup-marks and praying figures, this well-preserved engraving depicts a female figure dating to the Middle-Recent Bronze Age. It measures 27 × 19 cm and belongs to the <em>orante</em> typology, characterised by raised U-shaped arms and legs.</p><p class="panel-abstract">The figure is accompanied by three cup-marks of archaeological significance: the cup-mark positioned between the lower limbs is interpreted as representing the female sex, while the two on either side of the torso are thought to depict breasts.</p>`
+    },
+    'datasets/F03/RTI-17/ptm/index.html': {
+      title: 'Sector F — The Spiral Figure',
+      params: { iso: '200', aperture: 'f/8', shutter: '1/6 s' },
+      content: `<p class="panel-abstract">This isolated spiral engraving is located in Sector F. The spiral has a diameter of approximately 14.5 cm and is surrounded by a group of smoothed cup-marks. Its surrounding cup-marks are notably less deep and less worn than the spiral itself, suggesting they may belong to a different chronological phase.</p><p class="panel-abstract">RTI is particularly effective for this figure: the normal map rendering reveals the full depth and continuity of the spiral groove, which is difficult to appreciate under conventional illumination due to surface erosion.</p>`
+    },
+    'datasets/F04/RTI-23/ptm/index.html': {
+      title: 'Sector L — The Warrior Figure with Shield',
+      params: { iso: '320', aperture: 'f/8', shutter: '1/10 s' },
+      content: `<p class="panel-abstract">Located in Sector L, a particularly complex area featuring numerous anthropomorphic figures, this well-defined engraving depicts a warrior holding a shield and a lance. The figure measures 34.7 × 29.5 cm and is depicted in profile, with arms raised in a posture interpreted as ready to strike.</p><p class="panel-abstract">The engraving is part of a notable scene closely associated with a wild boar and a rake figure, all attributed to the Iron Age. The compositional grouping suggests a narrative or ceremonial context involving combat and hunting.</p>`
+    },
+    'datasets/F05/RTI-24/ptm/index.html': {
+      title: 'Sector L — The Second Warrior Figure',
+      params: { iso: '200', aperture: 'f/2.8', shutter: '1/50 s' },
+      content: `<p class="panel-abstract">Positioned south of the warrior with shield, this second armed figure in Sector L is less clearly defined. It appears to be superimposed on another engraving and measures approximately 35 × 25 cm. Its precise typology and dating remain under study due to the complexity of the superimpositions in this area.</p><p class="panel-abstract">Despite being acquired with a wider aperture, the specular sphere was found to be sufficiently in focus for processing. The dataset presents minor inconsistencies in image resolution across a small number of frames.</p>`
+    },
+    'datasets/F06/RTI-26/ptm/index.html': {
+      title: 'Sector L — The Wild Boar Figure',
+      params: { iso: '250', aperture: 'f/9', shutter: '1/5 s' },
+      content: `<p class="panel-abstract">This engraving in Sector L is identified as a wild boar, distinguishable from a domestic pig by its straight, lowered tail and sharp snout. The figure measures 19.5 × 10.5 cm and is considered part of a significant Iron Age scene alongside the warrior with shield and a rake engraving.</p><p class="panel-abstract">The compositional association between the boar, the warrior, and the rake is interpreted as representing a hunting or ritual scene, offering insight into the symbolic vocabulary of Iron Age communities at Rupe Magna.</p>`
+    },
+    'datasets/F07/RTI-28/ptm/index.html': {
+      title: 'Sector Q — The Goat Figure with a Beard',
+      params: { iso: '250', aperture: 'f/8', shutter: '1/4 s' },
+      content: `<p class="panel-abstract">This engraving in Sector Q depicts a goat measuring 27 × 16.5 cm, rendered with scimitar-shaped horns and including details such as a beard or glands under the chin and an indication of sex between the hind legs. These features identify it specifically as a wild goat (<em>capra selvatica</em>) rather than a chamois or ibex, and date it to the Iron Age.</p><p class="panel-abstract">The figure is one of a pair of caprid engravings in this sector. Its detailed anatomical rendering reflects the observational precision characteristic of Iron Age rock art at Rupe Magna.</p>`
+    },
+    'datasets/F08/RTI-33/ptm/index.html': {
+      title: 'Sector Q — The Second Goat Figure',
+      params: { iso: '320', aperture: 'f/8', shutter: '1/4 s' },
+      content: `<p class="panel-abstract">Located south of the goat with a beard, this second caprid engraving in Sector Q is the other member of an identified pair. It measures 19.5 × 16.5 cm and is depicted with scimitar-shaped horns that do not extend to its back. Unlike its northern counterpart, it lacks an engraved beard.</p><p class="panel-abstract">The slight morphological differences between the two goat figures — particularly the absence of a beard and the shorter horn extension — suggest a possible distinction in species or sex, though both are attributed to the same Iron Age phase.</p>`
+    },
+    'datasets/F09/RTI-35/ptm/index.html': {
+      title: 'Sector Q — The Map-like Figure',
+      params: { iso: '200', aperture: 'f/10', shutter: '1/5 s' },
+      content: `<p class="panel-abstract">This large geometric engraving in Sector Q is identified in the literature as a <em>reticolato</em>, or grid-like structure, interpreted as a topographical map. This example is composed of 18 to 19 cells and is attributed to the Copper Age (<em>età del Rame</em>), making it among the earliest engravings documented in this dataset.</p><p class="panel-abstract">The figure is notably worn due to its location on a more level and exposed area of the rock. RTI proves especially valuable here: the normal map rendering reveals the grid structure and individual cell boundaries that are largely invisible under ambient illumination.</p>`
+    },
+    'datasets/F10/RTI-38/ptm/index.html': {
+      title: 'Sector S — The Knight Figure',
+      params: { iso: '320', aperture: 'f/10', shutter: '1/4 s' },
+      content: `<p class="panel-abstract">Located in Sector S, this engraving is one of only three depictions of horse riders on Rupe Magna, making it a particularly rare and significant figure. It measures 30 × 22 cm and portrays a rider on horseback holding a rectangular shield with a central umbo in one raised hand. The figure is stylistically schematic.</p><p class="panel-abstract">The rarity of equestrian representations at the site reflects the exceptional status of horse riding in the social and ceremonial context of the communities that produced these engravings, likely during the Iron Age.</p>`
+    },
+    'datasets/F11/RTI-40/ptm/index.html': {
+      title: 'Sector S — The Figure with a Square',
+      params: { iso: '250', aperture: 'f/10', shutter: '1/8 s' },
+      content: `<p class="panel-abstract">This final documented figure, located in Sector S, is a complex composition depicting an anthropomorphic figure associated with a square element. It is among the most worn engravings in the dataset due to surface erosion, and its full outline is only partially legible under standard illumination.</p><p class="panel-abstract">The association of an anthropomorphic figure with a geometric square element places this engraving within the group of potentially topographical or cosmographic compositions attributed to the Copper Age, a period characterised by abstract and geometric symbolic systems at Rupe Magna.</p>`
+    }
+  };
+
+  const defaultContent = document.getElementById('panel-content').innerHTML;
+
+  let isMobileLayout = null;
+
+  function applyLayout() {
+    const mobile = window.innerWidth <= 720;
+    if (mobile === isMobileLayout) return;
+    isMobileLayout = mobile;
+
+    const panel = document.querySelector('.panel');
+    const main = document.querySelector('main');
+    const figStrip = document.querySelector('.fig-strip');
+    const viewerArea = document.querySelector('.viewer-area');
+    const panelContent = document.getElementById('panel-content');
+    const panelFooter = document.querySelector('.panel-footer');
+
+    if (mobile) {
+      panel.insertBefore(figStrip, panelContent);
+      panel.insertBefore(viewerArea, panelFooter);
+    } else {
+      main.prepend(figStrip);
+      main.appendChild(viewerArea);
+      viewerArea.classList.remove('mobile-active');
+    }
+  }
+
+  applyLayout();
+  window.addEventListener('resize', applyLayout);
+
+  function resetHome() {
+    document.querySelectorAll('.fig-card').forEach(el => el.classList.remove('active'));
+    document.getElementById('panel-content').innerHTML = defaultContent;
+    document.getElementById('panel-content').scrollTop = 0;
+    document.getElementById('viewer-frame').src = '';
+    document.getElementById('viewer-placeholder').style.display = 'flex';
+    const viewerArea = document.querySelector('.viewer-area');
+    viewerArea.classList.remove('mobile-active');
+  }
+
+  function selectFigure(card, url) {
+    document.querySelectorAll('.fig-card').forEach(el => el.classList.remove('active'));
+    card.classList.add('active');
+    document.getElementById('viewer-placeholder').style.display = 'none';
+    const frame = document.getElementById('viewer-frame');
+    frame.style.display = 'block';
+    frame.src = url;
+
+    const pc = document.getElementById('panel-content');
+    const fig = figureData[url];
+    if (fig) {
+      const [sector, figName] = fig.title.split(' — ');
+      const lbl = 'font-size:9px;text-transform:uppercase;letter-spacing:0.8px;font-weight:600;color:#1a1612;';
+      const paramsHtml = fig.params ? `
+        <div style="border-top:1px solid rgba(0,0,0,0.1);margin-top:4px;padding-top:12px;display:flex;flex-direction:column;gap:5px;">
+          <div class="footer-row"><span style="${lbl}">ISO</span><span class="footer-val">${fig.params.iso}</span></div>
+          <div class="footer-row"><span style="${lbl}">Aperture</span><span class="footer-val">${fig.params.aperture}</span></div>
+          <div class="footer-row"><span style="${lbl}">Shutter Speed</span><span class="footer-val">${fig.params.shutter}</span></div>
+        </div>` : '';
+      pc.innerHTML = `
+        <p style="font-size:17px; font-weight:700; color:#1a1612; line-height:1.2; margin-bottom:10px;">${figName}</p>
+        <hr style="border:none; border-top:1px solid rgba(0,0,0,0.1); margin:0 0 10px;">
+        <p style="font-size:12px; text-transform:uppercase; letter-spacing:0.8px; color:#9a8a78; margin-bottom:20px;">${sector}</p>
+        ${fig.content}${paramsHtml}`;
+    } else {
+      pc.innerHTML = defaultContent;
+    }
+    pc.scrollTop = 0;
+
+    if (window.innerWidth <= 720) {
+      const viewerArea = document.querySelector('.viewer-area');
+      viewerArea.classList.add('mobile-active');
+      viewerArea.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+</script>
+
+</body>
+</html>
