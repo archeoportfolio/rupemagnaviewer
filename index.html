@@ -291,17 +291,8 @@
         height: 100%;
       }
 
-      /* viewer-area inside panel on mobile */
-      .panel .viewer-area {
-        width: 100%;
-        height: 80vw;
-        min-height: 300px;
-        display: none;
-        margin-bottom: 24px;
-      }
-      .panel .viewer-area.mobile-active { display: block; }
-      .panel #viewer-frame { display: none !important; }
-      .panel .viewer-area.mobile-active #viewer-frame { display: block !important; }
+      /* viewer-area hidden on mobile — figures open in new tab */
+      .panel .viewer-area { display: none !important; }
 
       main { display: none; }
     }
@@ -550,8 +541,6 @@
     document.getElementById('panel-content').scrollTop = 0;
     document.getElementById('viewer-frame').src = '';
     document.getElementById('viewer-placeholder').style.display = 'flex';
-    const viewerArea = document.querySelector('.viewer-area');
-    viewerArea.classList.remove('mobile-active');
   }
 
   function selectFigure(card, url) {
@@ -584,9 +573,7 @@
     pc.scrollTop = 0;
 
     if (window.innerWidth <= 720) {
-      const viewerArea = document.querySelector('.viewer-area');
-      viewerArea.classList.add('mobile-active');
-      viewerArea.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      window.open(url, '_blank');
     }
   }
 </script>
