@@ -161,3 +161,9 @@ html, body {
     right: 0;
     bottom: 0;
 }
+
+/* ── Mobile ──────────────────────────────────────────────────────
+   Hide the ruler scale badge on small screens.                    */
+@media (max-width: 768px) {
+    .openlime-scale { display: none !important; }
+}
