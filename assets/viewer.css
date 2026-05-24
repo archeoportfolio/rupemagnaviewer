@@ -162,8 +162,12 @@ html, body {
     bottom: 0;
 }
 
+/* ── OpenLIME built-in layers panel — replaced by #mode-bar ─────
+   Hidden entirely; its right border at x=0 caused a white line.  */
+.openlime-layers-menu { display: none !important; }
+
 /* ── Mobile ──────────────────────────────────────────────────────
    Hide the ruler scale badge on small screens.                    */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
     .openlime-scale { display: none !important; }
 }
