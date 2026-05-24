@@ -851,53 +851,6 @@ g.openlime-expand {
 }
 
 /*****************************************************/
-/* LensDashboard */
-
-.openlime-lens-dashboard {
-	/* -webkit-animation: fadein 1s linear forwards;
-	animation: fadein 1s linear forwards; */
-	visibility: visible !important;
-	/* background-color: rgb(200, 0, 0, 0.8) !important; */
-}
-
-.openlime-lens-dashboard.closed .openlime-lens-dashboard-annoswitch-bar {
-	visibility: hidden !important;
-}
-
-.openlime-lens-dashboard.closed {
-	/* -webkit-animation: fadeout 1s linear forwards;
-	animation: fadeout 1s linear forwards; */
-	visibility: hidden !important;
-}
-
-.openlime-lens-dashboard-button-bkg {
-	fill: #333 !important;
-	pointer-events: none;
-}
-
-.openlime-lens-dashboard-button.enabled {
-	pointer-events: auto;
-	cursor: pointer;
-}
-
-.enabled .openlime-lens-dashboard-button-bkg {
-	fill: #aaa !important;
-}
-
-.openlime-lens-dashboard-button:hover .openlime-lens-dashboard-button-bkg {
-	fill: #ccc !important;
-}
-
-.openlime-lens-dashboard-camera-active .openlime-lens-dashboard-button-bkg {
-	fill: #fff !important;
-}
-
-.openlime-lens-dashboard-light-active .openlime-lens-dashboard-button-bkg {
-	fill: #fff !important;
-}
-
-
-/*****************************************************/
 /* Ruler */
 
 .openlime-ruler {

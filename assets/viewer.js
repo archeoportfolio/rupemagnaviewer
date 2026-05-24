@@ -65,6 +65,22 @@ async function _initLayers(config) {
     window._rtiBaseLayer = baseLayer;
     baseLayer.addEvent('ready', () => {
         baseLayer.setMode('diffuse');
+        if (config.rotate) {
+            const vw = window.innerWidth;
+            const vh = window.innerHeight;
+            const iw = (baseLayer.layout && baseLayer.layout.width  > 0
+                        ? baseLayer.layout.width  : vw);
+            const ih = (baseLayer.layout && baseLayer.layout.height > 0
+                        ? baseLayer.layout.height : vh);
+            const z  = (lime.camera.target && lime.camera.target.z) || 1;
+            let adj  = 1;
+            if (Math.abs(config.rotate % 180) === 90) {
+                const scaleOrig = Math.min(vw / iw, vh / ih);
+                const scaleNew  = Math.min(vw / ih, vh / iw);
+                adj = scaleOrig > 0 ? scaleNew / scaleOrig : 1;
+            }
+            lime.camera.setPosition(0, 0, 0, z * adj, config.rotate);
+        }
     });
 
     /* ── Vector overlay layer
@@ -214,28 +230,18 @@ function initViewer(config) {
         </div>
     `);
 
-    /* Intercept wheel events: slow down zoom and correct OpenLIME's inverted Y axis */
-    let _busy = false;
+    /* Intercept wheel events: control zoom speed directly via camera API */
     document.getElementById('demo').addEventListener('wheel', (e) => {
-        if (_busy) return;
         e.stopImmediatePropagation();
         e.preventDefault();
-        _busy = true;
-        const rect = e.currentTarget.getBoundingClientRect();
-        const slow = new WheelEvent('wheel', {
-            bubbles: true, cancelable: true,
-            view: window,
-            clientX: e.clientX,
-            clientY: rect.top + rect.bottom - e.clientY,
-            screenX: e.screenX, screenY: e.screenY,
-            ctrlKey: e.ctrlKey, shiftKey: e.shiftKey,
-            altKey: e.altKey,   metaKey: e.metaKey,
-            button: e.button,   buttons: e.buttons,
-            deltaX: e.deltaX * 0.3, deltaY: e.deltaY * 0.3, deltaZ: e.deltaZ,
-            deltaMode: e.deltaMode
-        });
-        e.target.dispatchEvent(slow);
-        _busy = false;
+        if (!window.lime) return;
+        const cam = window.lime.camera;
+        let delta = e.deltaY;
+        if (e.deltaMode === 1) delta *= 30;   // line → pixels
+        if (e.deltaMode === 2) delta *= 300;  // page → pixels
+        const z = (cam.target.z || 1) * Math.pow(2, -delta * 0.0003);
+        cam.setPosition(50, cam.target.x || 0, cam.target.y || 0,
+                        Math.max(0.05, z), cam.target.a || 0);
     }, { capture: true, passive: false });
 
     const script = document.createElement('script');
