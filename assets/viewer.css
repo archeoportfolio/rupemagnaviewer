@@ -1,0 +1,166 @@
+/* ═══════════════════════════════════════════════════════════════════
+   viewer.css — Rupe Magna RTI Viewer shared stylesheet
+   Applies to all dataset viewer pages that link this file.
+   OpenLIME skin styles remain in skin.css (upstream, do not edit).
+═══════════════════════════════════════════════════════════════════ */
+
+/* ── Base layout ─────────────────────────────────────────────────
+   Full-viewport, no scroll, black background.                      */
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+    background: #000;
+}
+
+/* ── OpenLIME toolbar ────────────────────────────────────────────
+   Floating pill centred at the bottom, matching the mode-bar style.
+   Overrides the skin.css full-width black bar.                      */
+.openlime-toolbar {
+    z-index: 1000;
+    left: 50% !important;
+    right: auto !important;
+    bottom: 8px !important;
+    transform: translateX(-50%);
+    background: #000 !important;
+    border-radius: 999px !important;
+    padding: 5px 8px !important;
+    justify-content: center !important;
+}
+
+/* ── Rendering-mode bar ──────────────────────────────────────────
+   Semi-transparent pill centred at the top.
+   Hidden by default via opacity:0; the .open class reveals it
+   instantly on Z / layers-button press.                             */
+#mode-bar {
+    position: fixed;
+    top: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+    z-index: 999;
+    display: flex;
+    gap: 3px;
+    background: rgba(0,0,0,0.45);
+    padding: 5px 8px;
+    border-radius: 999px;
+}
+#mode-bar.open {
+    opacity: 1;
+    pointer-events: auto;
+}
+#mode-bar button {
+    background: transparent;
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.5);
+    border-radius: 999px;
+    padding: 0.4vh 0.9vh;
+    font-size: 1.3vh;
+    font-family: system-ui, sans-serif;
+    letter-spacing: 0.3px;
+    cursor: pointer;
+    transition: color 0.15s;
+}
+#mode-bar button:hover {
+    color: rgba(255,255,255,0.7);
+}
+#mode-bar button.active {
+    color: #ffcc00;
+    border-color: #ffcc00;
+    font-weight: 600;
+}
+
+/* ── Toggle buttons (Vector, Lens) ──────────────────────────────
+   Visually separated from the shading-mode buttons by a left
+   border acting as a divider. Lens sits directly beside Vector.    */
+#btn-vector {
+    margin-left: 12px;
+}
+#btn-lens {
+    margin-left: 3px;
+}
+
+/* ── Help panel ──────────────────────────────────────────────────
+   Single-column panel centred in the viewport.
+   Hidden by default via opacity:0; .open reveals it instantly.     */
+#help-panel {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+    z-index: 1001;
+    width: 320px;
+    background: rgba(0,0,0,0.85);
+    padding: 16px 20px;
+    border-radius: 16px;
+    color: #fff;
+    font-family: system-ui, sans-serif;
+    font-size: 1.25vh;
+    line-height: 1.55;
+}
+#help-panel.open {
+    opacity: 1;
+    pointer-events: auto;
+}
+#help-panel h5 {
+    margin: 8px 0 3px;
+    font-size: 1.25vh;
+    color: #ffcc00;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+}
+#help-panel h5:first-child {
+    margin-top: 0;
+}
+#help-panel ul {
+    margin: 0 0 4px;
+    padding-left: 14px;
+}
+#help-panel li {
+    margin-bottom: 1px;
+}
+#help-panel p {
+    margin: 0 0 3px;
+    opacity: 0.85;
+}
+
+/* ── Ruler scale badge ───────────────────────────────────────────
+   SVG overlay produced by OpenLIME when the ruler is active.       */
+.openlime-scale {
+    position: fixed !important;
+    bottom: 8px !important;
+    left: 12px !important;
+    top: auto !important;
+    background: #000;
+    border-radius: 999px;
+    padding: 0 8px;
+    height: calc(5vh + 10px);
+    box-sizing: border-box;
+    overflow: hidden;
+}
+.openlime-scale text {
+    fill: #fff;
+    font-family: system-ui, sans-serif;
+    font-size: 20px;
+}
+.openlime-scale line {
+    stroke: #fff;
+    stroke-width: 1.5;
+}
+
+/* ── Viewer canvas bounds ────────────────────────────────────────
+   Full viewport — both toolbar and mode-bar float above the canvas
+   as pills, so no height clipping is needed.                        */
+#demo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}

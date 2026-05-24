@@ -28,14 +28,15 @@
 }
 
 .openlime-scale {
-	position: absolute;
-	bottom: 25px;
-	left: 0px;
-	width: 200px;
-	height: 40px;
-	padding: 15px;
+	position: fixed;
+	bottom: 0;
+	left: 12px;
+	width: 120px;
+	height: calc(5vh + 12px);
+	padding: 4px 0;
 	fill: white;
-	z-index: 1000;
+	z-index: 10001;
+	overflow: hidden;
 }
 
 .openlime-scale>text {
@@ -140,12 +141,15 @@
 }
 
 .openlime-toolbar {
-	position: absolute;
+	position: fixed;
 	bottom: 0px;
+	left: 0px;
 	right: 0px;
 	padding: 5px;
-	background-color: transparent;
+	background-color: #000;
 	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .openlime-toolbar svg:not(:root) {
@@ -165,6 +169,12 @@
 
 .openlime-light-active .openlime-bulb path[style] {
 	fill: #ffcc00 !important;
+}
+
+.openlime-light-active .openlime-button.openlime-light path[style],
+.openlime-button.openlime-light.openlime-light-active path[style] {
+	fill: #ffcc00 !important;
+	stroke: #ffcc00 !important;
 }
 
 .openlime-lightdir {
@@ -906,9 +916,14 @@ g.openlime-expand {
 	fill: yellow;
 }
 
+.openlime-button.openlime-ruler path[style] {
+	stroke-width: 0.4 !important;
+}
+
 .openlime-button.openlime-ruler-active path[style] {
 	fill: yellow !important;
 	stroke: yellow !important;
+	stroke-width: 0.4 !important;
 }
 
 .openlime-overlaymsg {
