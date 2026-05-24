@@ -73,14 +73,11 @@ html, body {
     font-weight: 600;
 }
 
-/* ── Toggle buttons (Vector, Lens) ──────────────────────────────
+/* ── Toggle button (Vector) ─────────────────────────────────────
    Visually separated from the shading-mode buttons by a left
-   border acting as a divider. Lens sits directly beside Vector.    */
+   border acting as a divider.                                       */
 #btn-vector {
     margin-left: 12px;
-}
-#btn-lens {
-    margin-left: 3px;
 }
 
 /* ── Help panel ──────────────────────────────────────────────────

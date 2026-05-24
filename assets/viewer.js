@@ -81,57 +81,6 @@ async function _initLayers(config) {
     lime.canvas.addLayer('vector', vectorLayer);
     window._vectorLayer = vectorLayer;
 
-    /* ── Lens content layer
-       A duplicate RTI layer locked to specular mode.
-       Rendered exclusively inside the magnifier lens.              */
-    const lensContentLayer = new OpenLIME.Layer({
-        layout:  layout,
-        type:    'rti',
-        url:     config.rtiUrl,
-        normals: normals,
-        visible: false,
-        label:   'Lens'
-    });
-    lime.canvas.addLayer('RTI Normals', lensContentLayer);
-    lensContentLayer.addEvent('ready', () => {
-        lensContentLayer.setMode('specular');
-    });
-
-    /* ── Lens radial navigator dashboard */
-    const lensDashboard = new OpenLIME.LensDashboardNavigatorRadial(lime, {
-        borderColor: [0, 0, 0, 0],
-        borderWidth: 0
-    });
-
-    /* ── Magnifier lens layer
-       Circular loupe overlaid on the canvas. Shows the lens
-       content layer inside and the base RTI outside.               */
-    const lensLayer = new OpenLIME.Layer({
-        type:         'lens',
-        layers:       [lensContentLayer],
-        camera:       lime.camera,
-        radius:       400,
-        borderEnable: false,
-        dashboard:    lensDashboard,
-        visible:      false,
-        label:        'Lens On/Off'
-    });
-    lime.canvas.addLayer('lens', lensLayer);
-    window._lensLayer = lensLayer;
-
-    /* ── Lens focus-context controller
-       Handles pointer interactions for moving and resizing
-       the magnifier lens.                                           */
-    const controllerLens = new OpenLIME.ControllerFocusContext({
-        lensLayer: lensLayer,
-        camera:    lime.camera,
-        canvas:    lime.canvas,
-        priority:  -200
-    });
-    lensLayer.controllers.push(controllerLens);
-    lime.pointerManager.onEvent(controllerLens);
-
-
     /* ══════════════════════════════════════════════════════════════
        SECTION 3 — TOOLBAR & UI ACTIONS
        Configures which OpenLIME toolbar buttons are displayed
@@ -158,14 +107,6 @@ async function _initLayers(config) {
 
     lime.camera.maxFixedZoom  = 1;
     window.lime = lime;
-
-    /* Lens toggle — M key kept in sync with the mode-bar button via toggleLens() */
-    ui.actions.lenstoggle = {
-        title:   'Open/Close Lens (Magnifier)',
-        key:     'm',
-        display: false,
-        task:    () => { toggleLens(); }
-    };
 
     /* Vector toggle — keyboard shortcut kept in sync with the
        mode-bar button via toggleVectorLayer()                       */
@@ -218,7 +159,6 @@ function _setupLightHighlight() {
    toggleModeBar()      — slides the rendering-mode bar in or out
    toggleHelpPanel()    — slides the help panel in or out
    setRTIMode(mode)     — switches RTI shading mode and updates button state
-   toggleLens()         — toggles the magnifier lens
    toggleVectorLayer()  — toggles the vector overlay
 ══════════════════════════════════════════════════════════════════ */
 
@@ -242,12 +182,6 @@ function initViewer(config) {
                 <li><strong>Specular</strong> — Specular reflectance</li>
                 <li><strong>Gray Diffuse</strong> — Greyscale diffuse</li>
                 <li><strong>Vector</strong> — Toggle vector overlay (also <strong>V</strong>)</li>
-                <li><strong>Lens</strong> — Toggle magnifier lens (also <strong>M</strong>)</li>
-            </ul>
-            <h5>Magnifier Lens</h5>
-            <ul>
-                <li>The lens shows specular mode; the surrounding area shows the base RTI.</li>
-                <li>Drag to reposition; scroll inside the lens to resize.</li>
             </ul>
             <h5>Ruler</h5>
             <ul>
@@ -258,7 +192,6 @@ function initViewer(config) {
             <ul>
                 <li><strong>L</strong> — Light control</li>
                 <li><strong>Z</strong> — Toggle mode bar</li>
-                <li><strong>M</strong> — Toggle magnifier lens</li>
                 <li><strong>V</strong> — Toggle vector overlay</li>
                 <li><strong>C</strong> — Toggle ruler</li>
                 <li><strong>A</strong> — Rotate view</li>
@@ -278,7 +211,6 @@ function initViewer(config) {
             <button id="btn-specular"     onclick="setRTIMode('specular')">Specular</button>
             <button id="btn-gray_diffuse" onclick="setRTIMode('gray_diffuse')">Gray Diffuse</button>
             <button id="btn-vector"       onclick="toggleVectorLayer()">Vector Off</button>
-            <button id="btn-lens"         onclick="toggleLens()">Lens Off</button>
         </div>
     `);
 
@@ -310,18 +242,6 @@ function initViewer(config) {
     script.src   = config.openlimeUrl;
     document.head.appendChild(script);
     script.onload = () => _initLayers(config);
-}
-
-function toggleLens() {
-    if (window._lensLayer) {
-        const isVisible = window._lensLayer.visible;
-        window._lensLayer.setVisible(!isVisible);
-        const btn = document.getElementById('btn-lens');
-        if (btn) {
-            btn.classList.toggle('active', !isVisible);
-            btn.textContent = isVisible ? 'Lens Off' : 'Lens On';
-        }
-    }
 }
 
 function toggleHelpPanel() {
@@ -361,7 +281,7 @@ function setRTIMode(mode) {
     if (window._rtiBaseLayer) {
         window._rtiBaseLayer.setMode(mode);
     }
-    document.querySelectorAll('#mode-bar button:not(#btn-vector):not(#btn-lens)')
+    document.querySelectorAll('#mode-bar button:not(#btn-vector)')
             .forEach(b => b.classList.remove('active'));
     const btn = document.getElementById('btn-' + mode);
     if (btn) btn.classList.add('active');
