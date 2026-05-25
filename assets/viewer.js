@@ -181,6 +181,12 @@ function _setupLightHighlight() {
 function initViewer(config) {
     document.getElementById('skinCssLink').href = config.stylesheetUrl;
 
+    /* Inject logo — fixed top-left, always visible */
+    const _logoUrl = config.stylesheetUrl.replace(/skin\.css$/, 'rpmlogo.png');
+    document.getElementById('demo').insertAdjacentHTML('afterbegin',
+        `<a href="https://www.parcoincisionigrosio.it/" target="_blank" style="position:fixed;top:18px;left:20px;z-index:998;display:block;"><img id="rmp-logo" src="${_logoUrl}" style="height:60px;display:block;cursor:pointer;"></a>`
+    );
+
     /* Inject help panel — starts invisible via CSS opacity:0 */
     document.getElementById('demo').insertAdjacentHTML('afterbegin', `
         <div id="help-panel">

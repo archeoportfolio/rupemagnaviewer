@@ -261,6 +261,26 @@
       .panel { width: 400px; padding: 28px 28px 24px; }
       .panel-abstract { font-size: 11px; }
     }
+    .fig-refs {
+      margin-top: 14px;
+      padding-top: 11px;
+      border-top: 1px solid rgba(0,0,0,0.08);
+    }
+    .refs-heading {
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: #9a8a78;
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+    .ref-item {
+      font-size: 10px;
+      color: #6a5e50;
+      line-height: 1.55;
+      margin-bottom: 3px;
+    }
+
     @media (max-width: 720px) {
       html, body { overflow-y: auto; height: auto; overflow-x: hidden; }
       .layout { flex-direction: column; height: auto; overflow: visible; }
@@ -317,19 +337,19 @@
 
     <p class="panel-abstract">
       Rupe Magna, located in Grosio (Sondrio, Valtellina), is the largest engraved
-      rock surface in the Alpine region. Spanning 84 metres in length and 35 metres
-      in height, it preserves over 5,000 carvings produced between the late Neolithic
-      (3rd millennium BCE) and the Iron Age (5th century BCE), including anthropomorphic,
-      zoomorphic, and geometric figures of exceptional archaeological significance.
+      rock surface in the Alpine region [1]. Spanning 84 metres in length and 35 metres
+      in width, it preserves approximately 5,454 carvings produced between the late Neolithic
+      (4th millennium BCE) and the Iron Age (1st millennium BCE), including anthropomorphic,
+      zoomorphic, and geometric figures of exceptional archaeological significance [2, 3].
     </p>
     <p class="panel-abstract">
       Reflectance Transformation Imaging (RTI) is a computational photography technique
-      that captures a surface under multiple, precisely controlled lighting directions.
+      that captures a surface under multiple, precisely controlled lighting directions [4].
       By fitting a mathematical reflectance model to each pixel, RTI enables interactive
       re-lighting and reveals micro-topographic detail invisible under standard illumination —
-      making it particularly effective for documenting eroded or shallow engravings.
-      Datasets were processed using RTI-FLOW and <a href="https://github.com/cnr-isti-vclab/relight" target="_blank" class="abstract-link">RelightLab</a>, and are visualised here
-      through <a href="https://github.com/cnr-isti-vclab/openlime" target="_blank" class="abstract-link">OpenLIME</a> (CNR-ISTI VCLAB).
+      making it particularly effective for documenting eroded or shallow engravings [5].
+      Datasets were processed using RTI-FLOW and <a href="https://github.com/cnr-isti-vclab/relight" target="_blank" class="abstract-link">RelightLab</a> [6], and are visualised here
+      through <a href="https://github.com/cnr-isti-vclab/openlime" target="_blank" class="abstract-link">OpenLIME</a> (CNR-ISTI VCLAB) [7].
     </p>
     <p class="panel-abstract">
       During the September 2025 field campaign, 40 RTI datasets were acquired across
@@ -337,8 +357,22 @@
       48 LEDs, 6 rings, Fujifilm X-S20). Eleven representative figures — among them
       praying figures, warriors, goats, and geometric symbols — were selected for
       this open dataset. All data are published as FAIR-compliant open resources in
-      accordance with the London Charter and the ECCCH framework.
+      accordance with the London Charter [8] and the ECCCH framework [9],
+      following the FAIR Guiding Principles for scientific data management [10].
     </p>
+    <div class="fig-refs">
+      <p class="refs-heading">References</p>
+      <p class="ref-item">[1] A. Fossati. "La rupe magna e l'Arte rupestre in valtellina," in <em>Rupe Magna</em>. Grosio: Consorzio Parco, 1995, pp. 15–18.</p>
+      <p class="ref-item">[2] A. Arcà. "I numeri," in <em>Rupe Magna</em>. Grosio: Consorzio Parco, 1995, pp. 119–124.</p>
+      <p class="ref-item">[3] E. Marchi and E. Tognoni. "Disposizione delle scene e delle figure nei settori," in <em>Rupe Magna</em>. Grosio: Consorzio Parco, 1995, pp. 29–38.</p>
+      <p class="ref-item">[4] T. Malzbender et al. <em>Enhancement of Shape Perception by Surface Reflectance Transformation</em>. HP Tech. Rep. HPL-2000-38R1, 2000.</p>
+      <p class="ref-item">[5] T. Malzbender, D. Gelb, and H. Wolters. "Polynomial texture maps," in <em>Proc. SIGGRAPH 2001</em>. ACM, 2001, pp. 519–528.</p>
+      <p class="ref-item">[6] F. Ponchio. <em>Relight: A RTI Library for Creating and Visualizing RTI</em>. GitHub, cnr-isti-vclab/relight, 2025.</p>
+      <p class="ref-item">[7] F. Ponchio et al. "OpenLIME: An open and flexible web framework for relightable image models," in <em>Proc. Eurographics Digital Heritage</em>, 2025.</p>
+      <p class="ref-item">[8] H. Denard. "The London Charter for the Computer-Based Visualisation of Cultural Heritage," 2009.</p>
+      <p class="ref-item">[9] European Commission. <em>The Cultural Heritage Cloud</em>. research-and-innovation.ec.europa.eu, 2025.</p>
+      <p class="ref-item">[10] M. D. Wilkinson et al. "The FAIR Guiding Principles for scientific data management and stewardship," <em>Sci. Data</em>, vol. 3, p. 160018, 2016.</p>
+    </div>
     </div>
 
     <div class="stats-grid" style="display:none">
@@ -452,57 +486,57 @@
     'datasets/F01/RTI-08/ptm/index.html': {
       title: 'Sector AA — The Praying Figure with Spiral',
       params: { iso: '400', aperture: 'f/10', shutter: '1/8 s' },
-      content: `<p class="panel-abstract">Located on the far left of Sector AA, this anthropomorphic figure is the symbol of the Rupe Magna Archaeological Park. The engraving measures 38.5 × 30.5 cm and is stylistically identified as a linear praying figure from the Early Iron Age, characterised by U-shaped arms and triangular legs.</p><p class="panel-abstract">Its defining feature is a superimposition upon an earlier, large spiral. The praying figure overlaps the spiral with its left arm, creating a striking visual ambiguity in which the spiral appears to emerge from the figure itself. Archaeologically, this overlapping provides crucial chronological evidence: the spiral must predate the first Iron Age.</p>`
+      content: `<p class="panel-abstract">Located on the far left of Sector AA, this anthropomorphic figure is the symbol of the Rupe Magna Archaeological Park [3, 12]. The engraving measures 38.5 × 30.5 cm and is stylistically identified as a linear praying figure from the Early Iron Age, characterised by U-shaped arms and triangular legs [11].</p><p class="panel-abstract">Its defining feature is a superimposition upon an earlier, large spiral. The praying figure overlaps the spiral with its left arm, creating a striking visual ambiguity in which the spiral appears to emerge from the figure itself. Archaeologically, this overlapping provides crucial chronological evidence: the spiral must predate the first Iron Age [13, p. 76].</p><div class="fig-refs"><p class="refs-heading">References</p><p class="ref-item">[3] E. Marchi and E. Tognoni. "Disposizione delle scene," in <em>Rupe Magna</em>. Grosio: Consorzio Parco, 1995, pp. 29–38.</p><p class="ref-item">[11] E. Tognoni. "Figure antropomorfe: Gli oranti," in <em>Rupe Magna</em>. Grosio: Consorzio Parco, 1995, pp. 39–50.</p><p class="ref-item">[12] A. Fossati. "Cronologia e interpretazione," in <em>Rupe Magna</em>. Grosio: Consorzio Parco, 1995, pp. 99–110.</p><p class="ref-item">[13] A. Arcà. "Figure geometriche," in <em>Rupe Magna</em>. Grosio: Consorzio Parco, 1995, pp. 73–86.</p></div>`
     },
     'datasets/F02/RTI-12/ptm/index.html': {
       title: 'Sector B — The Praying Woman Figure',
       params: { iso: '250', aperture: 'f/8', shutter: '1/40 s' },
-      content: `<p class="panel-abstract">Located in Sector B, a sector in the southern part of the rock featuring numerous cup-marks and praying figures, this well-preserved engraving depicts a female figure dating to the Middle-Recent Bronze Age. It measures 27 × 19 cm and belongs to the <em>orante</em> typology, characterised by raised U-shaped arms and legs.</p><p class="panel-abstract">The figure is accompanied by three cup-marks of archaeological significance: the cup-mark positioned between the lower limbs is interpreted as representing the female sex, while the two on either side of the torso are thought to depict breasts.</p>`
+      content: `<p class="panel-abstract">Located in Sector B, a sector in the southern part of the rock featuring numerous cup-marks and praying figures [3], this well-preserved engraving depicts a female figure dating to the Middle-Recent Bronze Age. It measures 27 × 19 cm and belongs to the <em>orante</em> typology, characterised by raised U-shaped arms and legs [11].</p><p class="panel-abstract">The figure is accompanied by three cup-marks of archaeological significance: the cup-mark positioned between the lower limbs is interpreted as representing the female sex, while the two on either side of the torso are thought to depict breasts [11].</p><div class="fig-refs"><p class="refs-heading">References</p><p class="ref-item">[3] E. Marchi and E. Tognoni. "Disposizione delle scene," in <em>Rupe Magna</em>. Grosio: Consorzio Parco, 1995, pp. 29–38.</p><p class="ref-item">[11] E. Tognoni. "Figure antropomorfe: Gli oranti," in <em>Rupe Magna</em>. Grosio: Consorzio Parco, 1995, pp. 39–50.</p></div>`
     },
     'datasets/F03/RTI-17/ptm/index.html': {
       title: 'Sector F — The Spiral Figure',
       params: { iso: '200', aperture: 'f/8', shutter: '1/6 s' },
-      content: `<p class="panel-abstract">This isolated spiral engraving is located in Sector F. The spiral has a diameter of approximately 14.5 cm and is surrounded by a group of smoothed cup-marks. Its surrounding cup-marks are notably less deep and less worn than the spiral itself, suggesting they may belong to a different chronological phase.</p><p class="panel-abstract">RTI is particularly effective for this figure: the normal map rendering reveals the full depth and continuity of the spiral groove, which is difficult to appreciate under conventional illumination due to surface erosion.</p>`
+      content: `<p class="panel-abstract">This isolated spiral engraving is located in Sector F. The spiral has a diameter of approximately 14.5 cm and is surrounded by a group of smoothed cup-marks. Its surrounding cup-marks are notably less deep and less worn than the spiral itself, suggesting they may belong to a different chronological phase and are not directly associated [13].</p><p class="panel-abstract">RTI is particularly effective for this figure: the normal map rendering reveals the full depth and continuity of the spiral groove, which is difficult to appreciate under conventional illumination due to surface erosion.</p><div class="fig-refs"><p class="refs-heading">References</p><p class="ref-item">[13] A. Arcà. "Figure geometriche," in <em>Rupe Magna</em>. Grosio: Consorzio Parco, 1995, pp. 73–86.</p></div>`
     },
     'datasets/F04/RTI-23/ptm/index.html': {
       title: 'Sector L — The Warrior Figure with Shield',
       params: { iso: '320', aperture: 'f/8', shutter: '1/10 s' },
-      content: `<p class="panel-abstract">Located in Sector L, a particularly complex area featuring numerous anthropomorphic figures, this well-defined engraving depicts a warrior holding a shield and a lance. The figure measures 34.7 × 29.5 cm and is depicted in profile, with arms raised in a posture interpreted as ready to strike.</p><p class="panel-abstract">The engraving is part of a notable scene closely associated with a wild boar and a rake figure, all attributed to the Iron Age. The compositional grouping suggests a narrative or ceremonial context involving combat and hunting.</p>`
+      content: `<p class="panel-abstract">Located in Sector L, a particularly complex area featuring numerous anthropomorphic figures [3], this well-defined engraving depicts a warrior holding a shield and a lance. The figure measures 34.7 × 29.5 cm and is depicted in profile, with arms raised in a posture interpreted as ready to strike [14].</p><p class="panel-abstract">The engraving is part of a notable scene closely associated with a wild boar and a rake figure, all attributed to the Iron Age [3, 15]. The compositional grouping suggests a narrative or ceremonial context involving combat and hunting.</p><div class="fig-refs"><p class="refs-heading">References</p><p class="ref-item">[3] E. Marchi and E. Tognoni. "Disposizione delle scene," in <em>Rupe Magna</em>. Grosio: Consorzio Parco, 1995, pp. 29–38.</p><p class="ref-item">[14] E. Marchi. "Figure antropomorfe: Armati e lottatori," in <em>Rupe Magna</em>. Grosio: Consorzio Parco, 1995, pp. 51–60.</p><p class="ref-item">[15] A. Arcà. "Le altre figure," in <em>Rupe Magna</em>. Grosio: Consorzio Parco, 1995, pp. 95–98.</p></div>`
     },
     'datasets/F05/RTI-24/ptm/index.html': {
       title: 'Sector L — The Second Warrior Figure',
       params: { iso: '200', aperture: 'f/2.8', shutter: '1/50 s' },
-      content: `<p class="panel-abstract">Positioned south of the warrior with shield, this second armed figure in Sector L is less clearly defined. It appears to be superimposed on another engraving and measures approximately 35 × 25 cm. Its precise typology and dating remain under study due to the complexity of the superimpositions in this area.</p><p class="panel-abstract">Despite being acquired with a wider aperture, the specular sphere was found to be sufficiently in focus for processing. The dataset presents minor inconsistencies in image resolution across a small number of frames.</p>`
+      content: `<p class="panel-abstract">Positioned south of the warrior with shield, this second armed figure in Sector L is less clearly defined [14]. It appears to be superimposed on another engraving and measures approximately 35 × 25 cm. Its precise typology and dating remain under study due to the complexity of the superimpositions in this area.</p><p class="panel-abstract">Despite being acquired with a wider aperture, the specular sphere was found to be sufficiently in focus for processing. The dataset presents minor inconsistencies in image resolution across a small number of frames.</p><div class="fig-refs"><p class="refs-heading">References</p><p class="ref-item">[14] E. Marchi. "Figure antropomorfe: Armati e lottatori," in <em>Rupe Magna</em>. Grosio: Consorzio Parco, 1995, pp. 51–60.</p></div>`
     },
     'datasets/F06/RTI-26/ptm/index.html': {
       title: 'Sector L — The Wild Boar Figure',
       params: { iso: '250', aperture: 'f/9', shutter: '1/5 s' },
-      content: `<p class="panel-abstract">This engraving in Sector L is identified as a wild boar, distinguishable from a domestic pig by its straight, lowered tail and sharp snout. The figure measures 19.5 × 10.5 cm and is considered part of a significant Iron Age scene alongside the warrior with shield and a rake engraving.</p><p class="panel-abstract">The compositional association between the boar, the warrior, and the rake is interpreted as representing a hunting or ritual scene, offering insight into the symbolic vocabulary of Iron Age communities at Rupe Magna.</p>`
+      content: `<p class="panel-abstract">This engraving in Sector L is identified as a wild boar, distinguishable from a domestic pig by its straight, lowered tail and sharp snout [16]. The figure measures 19.5 × 10.5 cm and is considered part of a significant Iron Age scene alongside the warrior with shield and a rake engraving [15].</p><p class="panel-abstract">The compositional association between the boar, the warrior, and the rake is interpreted as representing a hunting or ritual scene [3], offering insight into the symbolic vocabulary of Iron Age communities at Rupe Magna.</p><div class="fig-refs"><p class="refs-heading">References</p><p class="ref-item">[3] E. Marchi and E. Tognoni. "Disposizione delle scene," in <em>Rupe Magna</em>. Grosio: Consorzio Parco, 1995, pp. 29–38.</p><p class="ref-item">[15] A. Arcà. "Le altre figure," in <em>Rupe Magna</em>. Grosio: Consorzio Parco, 1995, pp. 95–98.</p><p class="ref-item">[16] A. Fossati. "Figure zoomorfe," in <em>Rupe Magna</em>. Grosio: Consorzio Parco, 1995, pp. 67–72.</p></div>`
     },
     'datasets/F07/RTI-28/ptm/index.html': {
       title: 'Sector Q — The Goat Figure with a Beard',
       params: { iso: '250', aperture: 'f/8', shutter: '1/4 s' },
-      content: `<p class="panel-abstract">This engraving in Sector Q depicts a goat measuring 27 × 16.5 cm, rendered with scimitar-shaped horns and including details such as a beard or glands under the chin and an indication of sex between the hind legs. These features identify it specifically as a wild goat (<em>capra selvatica</em>) rather than a chamois or ibex, and date it to the Iron Age.</p><p class="panel-abstract">The figure is one of a pair of caprid engravings in this sector. Its detailed anatomical rendering reflects the observational precision characteristic of Iron Age rock art at Rupe Magna.</p>`
+      content: `<p class="panel-abstract">This engraving in Sector Q depicts a goat measuring 27 × 16.5 cm, rendered with scimitar-shaped horns and including details such as a beard or glands under the chin and an indication of sex between the hind legs. These features identify it specifically as a wild goat (<em>capra selvatica</em>) rather than a chamois or ibex, and date it to the Iron Age [16].</p><p class="panel-abstract">The figure is one of a pair of caprid engravings in this sector [3]. Its detailed anatomical rendering reflects the observational precision characteristic of Iron Age rock art at Rupe Magna.</p><div class="fig-refs"><p class="refs-heading">References</p><p class="ref-item">[3] E. Marchi and E. Tognoni. "Disposizione delle scene," in <em>Rupe Magna</em>. Grosio: Consorzio Parco, 1995, pp. 29–38.</p><p class="ref-item">[16] A. Fossati. "Figure zoomorfe," in <em>Rupe Magna</em>. Grosio: Consorzio Parco, 1995, pp. 67–72.</p></div>`
     },
     'datasets/F08/RTI-33/ptm/index.html': {
       title: 'Sector Q — The Second Goat Figure',
       params: { iso: '320', aperture: 'f/8', shutter: '1/4 s' },
-      content: `<p class="panel-abstract">Located south of the goat with a beard, this second caprid engraving in Sector Q is the other member of an identified pair. It measures 19.5 × 16.5 cm and is depicted with scimitar-shaped horns that do not extend to its back. Unlike its northern counterpart, it lacks an engraved beard.</p><p class="panel-abstract">The slight morphological differences between the two goat figures — particularly the absence of a beard and the shorter horn extension — suggest a possible distinction in species or sex, though both are attributed to the same Iron Age phase.</p>`
+      content: `<p class="panel-abstract">Located south of the goat with a beard, this second caprid engraving in Sector Q is the other member of an identified pair [3]. It measures 19.5 × 16.5 cm and is depicted with scimitar-shaped horns that do not extend to its back. Unlike its northern counterpart, it lacks an engraved beard [16].</p><p class="panel-abstract">The slight morphological differences between the two goat figures — particularly the absence of a beard and the shorter horn extension — suggest a possible distinction in species or sex, though both are attributed to the same Iron Age phase [16].</p><div class="fig-refs"><p class="refs-heading">References</p><p class="ref-item">[3] E. Marchi and E. Tognoni. "Disposizione delle scene," in <em>Rupe Magna</em>. Grosio: Consorzio Parco, 1995, pp. 29–38.</p><p class="ref-item">[16] A. Fossati. "Figure zoomorfe," in <em>Rupe Magna</em>. Grosio: Consorzio Parco, 1995, pp. 67–72.</p></div>`
     },
     'datasets/F09/RTI-35/ptm/index.html': {
       title: 'Sector Q — The Map-like Figure',
       params: { iso: '200', aperture: 'f/10', shutter: '1/5 s' },
-      content: `<p class="panel-abstract">This large geometric engraving in Sector Q is identified in the literature as a <em>reticolato</em>, or grid-like structure, interpreted as a topographical map. This example is composed of 18 to 19 cells and is attributed to the Copper Age (<em>età del Rame</em>), making it among the earliest engravings documented in this dataset.</p><p class="panel-abstract">The figure is notably worn due to its location on a more level and exposed area of the rock. RTI proves especially valuable here: the normal map rendering reveals the grid structure and individual cell boundaries that are largely invisible under ambient illumination.</p>`
+      content: `<p class="panel-abstract">This large geometric engraving in Sector Q is identified in the literature as a <em>reticolato</em>, or grid-like structure, interpreted as a topographical map [3]. This example is composed of 18 to 19 cells and is attributed to the Copper Age (<em>età del Rame</em>), making it among the earliest engravings documented in this dataset [13].</p><p class="panel-abstract">The figure is notably worn due to its location on a more level and exposed area of the rock [13]. RTI proves especially valuable here: the normal map rendering reveals the grid structure and individual cell boundaries that are largely invisible under ambient illumination.</p><div class="fig-refs"><p class="refs-heading">References</p><p class="ref-item">[3] E. Marchi and E. Tognoni. "Disposizione delle scene," in <em>Rupe Magna</em>. Grosio: Consorzio Parco, 1995, pp. 29–38.</p><p class="ref-item">[13] A. Arcà. "Figure geometriche," in <em>Rupe Magna</em>. Grosio: Consorzio Parco, 1995, pp. 73–86.</p></div>`
     },
     'datasets/F10/RTI-38/ptm/index.html': {
       title: 'Sector S — The Knight Figure',
       params: { iso: '320', aperture: 'f/10', shutter: '1/4 s' },
-      content: `<p class="panel-abstract">Located in Sector S, this engraving is one of only three depictions of horse riders on Rupe Magna, making it a particularly rare and significant figure. It measures 30 × 22 cm and portrays a rider on horseback holding a rectangular shield with a central umbo in one raised hand. The figure is stylistically schematic.</p><p class="panel-abstract">The rarity of equestrian representations at the site reflects the exceptional status of horse riding in the social and ceremonial context of the communities that produced these engravings, likely during the Iron Age.</p>`
+      content: `<p class="panel-abstract">Located in Sector S, this engraving is one of only three depictions of horse riders on Rupe Magna, making it a particularly rare and significant figure [17]. It measures 30 × 22 cm and portrays a rider on horseback holding a rectangular shield with a central umbo in one raised hand. The figure is stylistically schematic [16].</p><p class="panel-abstract">The dating of this figure requires careful consideration. While equestrian figures have traditionally been attributed to the Iron Age (8th century BCE), recent research suggests that horse breeding by Italic communities was already established in the early Middle Bronze Age, opening the possibility that this rider represents a much earlier phase [18].</p><div class="fig-refs"><p class="refs-heading">References</p><p class="ref-item">[16] A. Fossati. "Figure zoomorfe," in <em>Rupe Magna</em>. Grosio: Consorzio Parco, 1995, pp. 67–72.</p><p class="ref-item">[17] E. Tognoni and E. Marchi. "Altre figure antropomorfe," in <em>Rupe Magna</em>. Grosio: Consorzio Parco, 1995, pp. 61–66.</p><p class="ref-item">[18] C. Putzolu. "La Rivoluzione dei Prodotti Secondari," <em>IpoTESI di Preistoria</em>, vol. 14, pp. 123–142, 2021. DOI: 10.6092/issn.1974-7985/14334.</p></div>`
     },
     'datasets/F11/RTI-40/ptm/index.html': {
       title: 'Sector S — The Figure with a Square',
       params: { iso: '250', aperture: 'f/10', shutter: '1/8 s' },
-      content: `<p class="panel-abstract">This final documented figure, located in Sector S, is a complex composition depicting an anthropomorphic figure associated with a square element. It is among the most worn engravings in the dataset due to surface erosion, and its full outline is only partially legible under standard illumination.</p><p class="panel-abstract">The association of an anthropomorphic figure with a geometric square element places this engraving within the group of potentially topographical or cosmographic compositions attributed to the Copper Age, a period characterised by abstract and geometric symbolic systems at Rupe Magna.</p>`
+      content: `<p class="panel-abstract">This final documented figure, located in Sector S, is a complex composition depicting an anthropomorphic figure associated with a square element [17]. It is among the most worn engravings in the dataset due to surface erosion, and its full outline is only partially legible under standard illumination.</p><p class="panel-abstract">The association of an anthropomorphic figure with a geometric square element places this engraving within the group of potentially topographical or cosmographic compositions attributed to the Copper Age [12, 13], a period characterised by abstract and geometric symbolic systems at Rupe Magna.</p><div class="fig-refs"><p class="refs-heading">References</p><p class="ref-item">[12] A. Fossati. "Cronologia e interpretazione," in <em>Rupe Magna</em>. Grosio: Consorzio Parco, 1995, pp. 99–110.</p><p class="ref-item">[13] A. Arcà. "Figure geometriche," in <em>Rupe Magna</em>. Grosio: Consorzio Parco, 1995, pp. 73–86.</p><p class="ref-item">[17] E. Tognoni and E. Marchi. "Altre figure antropomorfe," in <em>Rupe Magna</em>. Grosio: Consorzio Parco, 1995, pp. 61–66.</p></div>`
     }
   };
 
@@ -562,11 +596,17 @@
           <div class="footer-row"><span style="${lbl}">Aperture</span><span class="footer-val">${fig.params.aperture}</span></div>
           <div class="footer-row"><span style="${lbl}">Shutter Speed</span><span class="footer-val">${fig.params.shutter}</span></div>
         </div>` : '';
+      const tmp = document.createElement('div');
+      tmp.innerHTML = fig.content;
+      const refsEl = tmp.querySelector('.fig-refs');
+      const refsHtml = refsEl ? refsEl.outerHTML : '';
+      if (refsEl) refsEl.remove();
       pc.innerHTML = `
         <p style="font-size:17px; font-weight:700; color:#1a1612; line-height:1.2; margin-bottom:10px;">${figName}</p>
         <hr style="border:none; border-top:1px solid rgba(0,0,0,0.1); margin:0 0 10px;">
-        <p style="font-size:12px; text-transform:uppercase; letter-spacing:0.8px; color:#9a8a78; margin-bottom:20px;">${sector}</p>
-        ${fig.content}${paramsHtml}`;
+        <p style="font-size:12px; text-transform:uppercase; letter-spacing:0.8px; color:#9a8a78; margin-bottom:10px;">${sector}</p>
+        <hr style="border:none; border-top:1px solid rgba(0,0,0,0.1); margin:0 0 16px;">
+        ${tmp.innerHTML}${paramsHtml}${refsHtml}`;
     } else {
       pc.innerHTML = defaultContent;
     }
