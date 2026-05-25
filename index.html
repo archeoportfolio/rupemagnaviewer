@@ -204,15 +204,18 @@
       border-radius: 4px;
       border-bottom: 3px solid transparent;
       transition: border-color 0.15s, opacity 0.15s, transform 0.15s;
+      opacity: 0.3;
     }
     .fig-card:hover:not(.unavailable) {
       border-bottom-color: rgba(200,160,80,0.55);
       transform: translateY(-2px);
       z-index: 1;
+      opacity: 0.7;
     }
     .fig-card.active {
       border-bottom-color: #c8a055;
       transform: translateY(-2px);
+      opacity: 1;
     }
     .fig-card.unavailable { opacity: 0.35; cursor: not-allowed; }
     .fig-card.unavailable img { filter: grayscale(100%); }
